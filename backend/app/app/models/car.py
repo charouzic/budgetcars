@@ -11,12 +11,12 @@ if TYPE_CHECKING:
     from .branch import Branch  # noqa: F401
     from .company import Company # noqa: F401
 
-class FuelType(Enum):
+class FuelType(str, Enum):
     PETROL = "Petrol"
     DIESEL = "Diesel"
     UNKNOWN = "Unknown"
 
-class Transmission(Enum):
+class Transmission(str, Enum):
     MANUAL = "Manual"
     AUTOMATIC = "Automatic"
     UNKNOWN = "Unknown"
@@ -40,6 +40,6 @@ class Car(Base):
     seats = Column(Integer, index=True, nullable=False)
 
     # Relationship with branch
-    branches = relationship("Branch", back_populates="cars")
+    branch = relationship("Branch", back_populates="cars")
     # Relationship with company
     companies = relationship("Company", back_populates="cars")

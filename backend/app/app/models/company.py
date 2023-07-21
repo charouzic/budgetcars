@@ -14,6 +14,6 @@ class Company(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
     # Relationship with branches
-    branches = relationship("Branch", back_populates="companies")
+    branches = relationship("Branch", back_populates="company")
     # Relationship with cars
-    cars = relationship("Car", back_populates="branches")
+    cars = relationship("Car", back_populates="companies")
