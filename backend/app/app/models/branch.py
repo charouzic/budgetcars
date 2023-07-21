@@ -16,4 +16,6 @@ class Branch(Base):
     branch_name = Column(String, nullable=False)
     location = Column(String, nullable=False)
     # Relationship with company
-    company = relationship("Company", back_populates="branches")
+    companies = relationship("Company", back_populates="branches")
+    # relationship with car
+    cars = relationship("Car", back_populates="branches")

@@ -4,4 +4,5 @@ from app.db.base_class import Base  # noqa
 from app.models.item import Item  # noqa
 from app.models.user import User  # noqa
 from app.models.company import Company  # noqa
-from app.models.branch import Branch
+from app.models.branch import Branch # noqa
+from app.models.car import Car # noqa
