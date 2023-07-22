@@ -10,6 +10,37 @@ from app.models.car import FuelType, Transmission
 
 router = APIRouter()
 
+@router.get("/company/{company_id}/branch/{branch_id}/cars/", response_model=List[schemas.Car])
+def read_cars(
+    company_id: int,
+    branch_id: int,
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+) -> Any:
+    """
+    Retrieve all cars.
+    """
+    cars = crud.car.get_all(db, company_id=company_id, 
+        branch_id=branch_id, skip=skip, limit=limit)
+    return cars
+
+@router.get("/company/{company_id}/branch/{branch_id}/cars/feeling_lucky/", response_model=List[schemas.Car])
+def read_cars_feeling_lucky(
+    company_id: int,
+    branch_id: int,
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+) -> Any:
+    """
+    Retrieve all cars selected randomly.
+    """
+    cars = crud.car.get_random_records(db, company_id=company_id, 
+        branch_id=branch_id, skip=skip, limit=limit)
+    return cars
+
+
 @router.get("/company/{company_id}/branch/{branch_id}/cars/search/", response_model=List[schemas.Car])
 def search_cars(
     company_id: int,

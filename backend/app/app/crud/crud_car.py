@@ -1,3 +1,4 @@
+import random
 from typing import List, Optional, Type, TypeVar
 
 from fastapi.encoders import jsonable_encoder
@@ -21,9 +22,27 @@ class CRUDCar(CRUDBase[Car, CarCreate, CarUpdate]):
         return db_obj
 
     def get_all(
-        self, db: Session, *, skip: int = 0, limit: int = 100
+        self, db: Session, *, company_id: int, branch_id: int, skip: int = 0, limit: int = 100
     ) -> List[Car]:
-        return db.query(self.model).offset(skip).limit(limit).all()
+        return db.query(self.model).filter(
+            self.model.company_id == company_id,
+            self.model.branch_id == branch_id).offset(skip).limit(limit).all()
+    
+    def get_random_records(
+        self, db: Session, *, company_id: int, branch_id: int, skip: int = 0, limit: int = 100
+    ) -> List[Car]:
+        # Get the total count of rows in the table
+        total_rows = db.query(self.model).filter(
+            self.model.company_id == company_id,
+            self.model.branch_id == branch_id).count()
+
+        # Calculate the random offset based on the total count and the skip value
+        random_offset = random.randint(0, max(0, total_rows - 1 - skip))
+
+        # Use the random_offset to skip random rows in the result
+        return db.query(self.model).filter(
+            self.model.company_id == company_id,
+            self.model.branch_id == branch_id).offset(random_offset + skip).limit(limit).all()
     
     def get_makes(self, db: Session, company_id: int, branch_id: int) -> List[str]:
         return car.get_distinct_values_from_column(Car.make, db, company_id=company_id, branch_id=branch_id)
