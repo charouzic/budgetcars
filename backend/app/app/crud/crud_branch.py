@@ -40,5 +40,4 @@ class CRUDBranch(CRUDBase[Branch, BranchCreate, BranchUpdate]):
             .all()
         )
 
-
 branch = CRUDBranch(Branch)

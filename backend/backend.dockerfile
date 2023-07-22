@@ -22,4 +22,6 @@ ARG INSTALL_JUPYTER=false
 RUN bash -c "if [ $INSTALL_JUPYTER == 'true' ] ; then pip install jupyterlab ; fi"
 
 COPY ./app /app
+# copy the initial csv data
+COPY /app/app/db/data/data.csv /app/db/data/data.csv
 ENV PYTHONPATH=/app
