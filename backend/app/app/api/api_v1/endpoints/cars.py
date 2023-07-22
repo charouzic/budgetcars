@@ -3,6 +3,7 @@ from typing import Any, List
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
+from pydantic import ValidationError
 from app import crud, models, schemas
 from app.api import deps
 from app.models.car import FuelType, Transmission
@@ -62,5 +63,76 @@ def create_car(
     car = crud.car.create(db=db, company_id=company_id, branch_id=branch_id, obj_in=car_data)
     return car
 
+@router.get("/car/{id}", response_model=schemas.Car)
+def read_car(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+) -> Any:
+    """
+    Get car by ID.
+    """
+    car = crud.car.get(db=db, id=id)
+    if not car:
+        raise HTTPException(status_code=404, detail="Car record not found")
+    return car
 
+@router.get("/company/{company_id}/branch/{branch_id}/cars/makes/", response_model=dict)
+def read_makes(
+    company_id: int,
+    branch_id: int,
+    *,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """
+    Get all available car makes for a given branch.
+    """
+    makes = crud.car.get_makes(db=db, company_id=company_id, branch_id=branch_id)
+    if not makes:
+        raise HTTPException(status_code=404, detail="Makes not found")
+    return {"makes": makes}
 
+@router.get("/cars/fuel_types/", response_model=dict)
+def read_fuel_types() -> Any:
+    """
+    Get all available fuel types.
+    """
+    return {"fuel_types": [fuel_type.value for fuel_type in FuelType]}
+
+@router.get("/cars/transmissions/", response_model=dict)
+def read_transmissions() -> Any:
+    """
+    Get all available transmissions.
+    """
+    return {"transmissions": [transmission.value for transmission in Transmission]}
+
+@router.get("/company/{company_id}/branch/{branch_id}/cars/colors/", response_model=dict)
+def read_colors(
+    company_id: int,
+    branch_id: int,
+    *,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """
+    Get all available car colors for a given branch.
+    """
+    colors = crud.car.get_colors(db=db, company_id=company_id, branch_id=branch_id)
+    if not colors:
+        raise HTTPException(status_code=404, detail="Colors not found")
+    return {"colors": colors}
+
+# seats
+@router.get("/company/{company_id}/branch/{branch_id}/cars/seats/", response_model=dict)
+def read_seats(
+    company_id: int,
+    branch_id: int,
+    *,
+    db: Session = Depends(deps.get_db),
+) -> Any:
+    """
+    Get all available number of seats for a car in a given branch.
+    """
+    seats = crud.car.get_seats(db=db, company_id=company_id, branch_id=branch_id)
+    if not seats:
+        raise HTTPException(status_code=404, detail="Seats not found")
+    return {"seats": seats}

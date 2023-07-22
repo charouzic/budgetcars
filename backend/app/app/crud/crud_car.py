@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Type, TypeVar
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
@@ -8,6 +8,8 @@ from app.crud.base import CRUDBase
 from app.models.car import Car, FuelType, Transmission
 from app.schemas.car  import CarCreate, CarUpdate
 
+# Define a type variable for the column type
+ColumnT = TypeVar('ColumnT')
 
 class CRUDCar(CRUDBase[Car, CarCreate, CarUpdate]):
     def create(self, db: Session, *, obj_in: CarCreate, company_id: int, branch_id: int) -> Car:
@@ -23,16 +25,15 @@ class CRUDCar(CRUDBase[Car, CarCreate, CarUpdate]):
     ) -> List[Car]:
         return db.query(self.model).offset(skip).limit(limit).all()
     
-    def get_by_company(
-        self, db: Session, *, company_id: int, skip: int = 0, limit: int = 100
-    ) -> List[Car]:
-        return (
-            db.query(self.model)
-            .filter(self.model.company_id == company_id)
-            .offset(skip)
-            .limit(limit)
-            .all()
-        )
+    def get_makes(self, db: Session, company_id: int, branch_id: int) -> List[str]:
+        return car.get_distinct_values_from_column(Car.make, db, company_id=company_id, branch_id=branch_id)
+
+
+    def get_colors(self, db: Session, company_id: int, branch_id: int) -> List[str]:
+        return car.get_distinct_values_from_column(Car.color, db, company_id=company_id, branch_id=branch_id)
+    
+    def get_seats(self, db: Session, company_id: int, branch_id: int) -> List[int]:
+        return car.get_distinct_values_from_column(Car.seats, db, company_id=company_id, branch_id=branch_id)
     
     def search_by_filters(
         self,
@@ -99,6 +100,19 @@ class CRUDCar(CRUDBase[Car, CarCreate, CarUpdate]):
             query = query.filter(and_(*filter_conditions))
 
         return query.offset(skip).limit(limit).all()
+    
+    def get_distinct_values_from_column(
+        self,
+        column: Type[ColumnT],
+        db: Session,
+        company_id: int,
+        branch_id: int
+    ) -> List[ColumnT]:
+        results = db.query(column).filter(
+            self.model.company_id == company_id,
+            self.model.branch_id == branch_id
+        ).distinct().all()
 
+        return [result[0] for result in results]
 
 car = CRUDCar(Car)
