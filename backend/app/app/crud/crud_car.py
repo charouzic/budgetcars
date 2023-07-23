@@ -1,5 +1,6 @@
 import random
 from typing import List, Optional, Type, TypeVar
+from app.core.filtering_utils import content_filtering
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
@@ -133,5 +134,23 @@ class CRUDCar(CRUDBase[Car, CarCreate, CarUpdate]):
         ).distinct().all()
 
         return [result[0] for result in results]
+    
+    def get_similar_cars(
+        self,
+        db: Session,
+        id: int,
+        company_id: int,
+        branch_id: int,
+        skip: int = 0, 
+        limit: int = 100
+    ) -> List[Car]:
+        target_car = db.query(self.model).filter(self.model.id == id).first()
+        all_cars = db.query(self.model).filter(
+            self.model.company_id == company_id,
+            self.model.branch_id == branch_id).offset(skip)
+        
+        similar_cars = content_filtering(target_car, all_cars)
 
+        return similar_cars[:limit]
+    
 car = CRUDCar(Car)

@@ -167,3 +167,52 @@ def read_seats(
     if not seats:
         raise HTTPException(status_code=404, detail="Seats not found")
     return {"seats": seats}
+
+@router.delete("/cars/{id}", response_model=schemas.Car)
+def delete_car(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+) -> Any:
+    """
+    Delete a car record.
+    """
+    car = crud.car.get(db=db, id=id)
+    if not car:
+        raise HTTPException(status_code=404, detail="Car record not found")
+    car = crud.car.remove(db=db, id=id)
+    return car
+
+@router.put("/cars/{id}", response_model=schemas.Car)
+def update_car(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    car_in: schemas.CarUpdate,
+) -> Any:
+    """
+    Update car record.
+    """
+    car = crud.car.get(db=db, id=id)
+    if not car:
+        raise HTTPException(status_code=404, detail="Car record not found")
+    car = crud.car.update(db=db, db_obj=car, obj_in=car_in)
+    return car
+
+@router.get("/company/{company_id}/branch/{branch_id}/cars/{id}/similar/", response_model=List[schemas.Car])
+def get_cars_similar(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    company_id: int,
+    branch_id: int,
+    limit: int = 100
+) -> Any:
+    """
+    Get cars similar to one provided id.
+    """
+    car = crud.car.get(db=db, id=id)
+    if not car:
+        raise HTTPException(status_code=404, detail="Car record not found")
+    cars = crud.car.get_similar_cars(db=db, id=id, company_id=company_id, branch_id=branch_id, limit=limit)
+    return cars

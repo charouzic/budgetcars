@@ -58,7 +58,7 @@ def get_or_create_branch(db: Session, company_id: int) -> None:
     return branch.id
 
 def upload_cars_df_to_db(db: Session, df: pd.DataFrame, company_id: int, branch_id: int)  -> None:
-    car = crud.car.get_all(db, limit=1)
+    car = crud.car.get_all(db, company_id=company_id, branch_id=branch_id, limit=1)
     if not car:
         for _, row in df.iterrows():
             fuel_type_str = row['Fuel Type']
