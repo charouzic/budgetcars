@@ -9,6 +9,8 @@ class UserBase(BaseModel):
     is_active: Optional[bool] = True
     is_superuser: bool = False
     full_name: Optional[str] = None
+    company_id: Optional[int] = None
+    branch_id: Optional[int] = None
 
 
 # Properties to receive via API on creation

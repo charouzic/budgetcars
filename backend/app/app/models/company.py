@@ -7,7 +7,7 @@ from app.db.base_class import Base
 
 if TYPE_CHECKING:
     from .branch import Branch  # noqa: F401
-
+    from .user import User  # noqa: F401
 
 class Company(Base):
     __tablename__ = "companies"
@@ -17,3 +17,5 @@ class Company(Base):
     branches = relationship("Branch", back_populates="company")
     # Relationship with cars
     cars = relationship("Car", back_populates="companies")
+    # Relationship with users
+    users = relationship("User", back_populates="company")
