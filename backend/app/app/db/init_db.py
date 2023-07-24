@@ -56,7 +56,7 @@ def get_or_create_company(db: Session) -> int:
             name = "FilutaAI"
         )
         company = crud.company.create(db, obj_in=company_in)  # noqa: F841
-    print(f"company_id: {company.id}")
+        
     return int(company.id)
 
 def get_or_create_branch(db: Session, company_id: int) -> int:
@@ -69,7 +69,6 @@ def get_or_create_branch(db: Session, company_id: int) -> int:
         )
         branch = crud.branch.create(db, obj_in=branch_in, company_id=company_id)  # noqa: F841
 
-    print(f"branch_id: {branch.id}")
     return int(branch.id)
 
 def upload_cars_df_to_db(db: Session, df: pd.DataFrame, company_id: int, branch_id: int)  -> None:

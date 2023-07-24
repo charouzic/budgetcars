@@ -8,6 +8,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from .company import Company  # noqa: F401
     from .user import User  # noqa: F401
+    from .user_interaction import UserInteraction  # noqa: F401
 
 class Branch(Base):
     __tablename__ = "branches"
@@ -15,9 +16,8 @@ class Branch(Base):
     company_id = Column(Integer, ForeignKey("companies.id"), nullable=False)
     branch_name = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    # Relationship with company
+    # Relationships
     company = relationship("Company", back_populates="branches")
-    # Relationship with car
     cars = relationship("Car", back_populates="branch")
-    # Relationship with users
     users = relationship("User", back_populates="branch")
+    interactions = relationship("UserInteraction", back_populates="branch")

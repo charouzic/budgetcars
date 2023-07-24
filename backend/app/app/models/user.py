@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .item import Item  # noqa: F401
     from .branch import Branch  # noqa: F401
     from .company import Company  # noqa: F401
+    from .user_interaction import UserInteraction  # noqa: F401
 
 
 class User(Base):
@@ -27,3 +28,4 @@ class User(Base):
     company = relationship("Company", back_populates="users")
     branch = relationship("Branch", back_populates="users")
     items = relationship("Item", back_populates="owner")
+    interactions = relationship("UserInteraction", back_populates="user")

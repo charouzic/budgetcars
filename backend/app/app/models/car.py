@@ -10,6 +10,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from .branch import Branch  # noqa: F401
     from .company import Company # noqa: F401
+    from .user_interaction import UserInteraction  # noqa: F401
 
 class FuelType(str, Enum):
     PETROL = "Petrol"
@@ -39,7 +40,7 @@ class Car(Base):
     color = Column(String, index=True, nullable=False)
     seats = Column(Integer, index=True, nullable=False)
 
-    # Relationship with branch
+    # Relationships
     branch = relationship("Branch", back_populates="cars")
-    # Relationship with company
     companies = relationship("Company", back_populates="cars")
+    interactions = relationship("UserInteraction", back_populates="car")
