@@ -8,12 +8,12 @@ class CompanyBase(BaseModel):
     name: Optional[str] = None
 
 
-# Properties to receive on item creation
+# Properties to receive on company creation
 class CompanyCreate(CompanyBase):
     pass
 
 
-# Properties to receive on item update
+# Properties to receive on company update
 class CompanyUpdate(CompanyBase):
     pass
 
