@@ -9,7 +9,7 @@ from app.schemas.company  import CompanyCreate, CompanyUpdate
 
 
 class CRUDCompany(CRUDBase[Company, CompanyCreate, CompanyUpdate]):
-    def create(
+    def create_with_name(
         self, db: Session, *, obj_in: CompanyCreate) -> Company:
         db_obj = Company(name=obj_in.name)
         db.add(db_obj)

@@ -31,7 +31,7 @@ def create_company(
     """
     Create new company record.
     """
-    company = crud.company.create(db=db, obj_in=company_in)
+    company = crud.company.create_with_name(db=db, obj_in=company_in)
     return company
 
 
