@@ -19,7 +19,7 @@ class CarBase(BaseModel):
     seats: Optional[int] = None
 
 
-# Properties to receive on item creation
+# Properties to receive on car creation
 class CarCreate(CarBase):
     make: str
     model: str
@@ -32,7 +32,7 @@ class CarCreate(CarBase):
     seats: int
 
 
-# Properties to receive on item update
+# Properties to receive on car update
 class CarUpdate(CarBase):
     pass
 

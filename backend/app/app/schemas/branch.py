@@ -9,13 +9,13 @@ class BranchBase(BaseModel):
     location: Optional[str] = None
 
 
-# Properties to receive on item creation
+# Properties to receive on branch creation
 class BranchCreate(BranchBase):
     branch_name: str
     location: str
 
 
-# Properties to receive on item update
+# Properties to receive on branch update
 class BranchUpdate(BranchBase):
     pass
 
