@@ -1,7 +1,5 @@
 from typing import Optional
 from app.models.car import FuelType, Transmission
-# from app.schemas.fuel_type import FuelType
-# from app.schemas.transmission import Transmission
 
 from pydantic import BaseModel
 

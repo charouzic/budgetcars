@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from enum import Enum
 
-from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime, Enum as EnumSA
+from sqlalchemy import Column, Integer, ForeignKey, DateTime, Enum as EnumSA
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base

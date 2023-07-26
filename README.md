@@ -45,6 +45,9 @@ docker-compose up -d
 ## Data Engineering
 - for the data engineering part there's a showcase of how the module for data pipeline could look like [this](backend/app/data_processing/car_data_pipeline.py)
 - additionally, the data could be uploaded to the postgres (to already existing table or create new table specific for data pipeline)
+- basic exploratory data analysis is [here](backend/app/data_processing/car_data_utils.py)
+- very basic content filtering used to show similar cars is [here](backend/app/app/core/filtering_utils.py)
+- part of the docker setup are jupyter notebooks (check [AdditionalProjectInfo](AdditionalProjectInfo.md) for more info)
 
 ## DevOps/Infrastructure
 - the whole fullstack app is wrapped in dockers
