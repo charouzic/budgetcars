@@ -10,8 +10,7 @@ from app.schemas.branch  import BranchCreate, BranchUpdate
 
 class CRUDBranch(CRUDBase[Branch, BranchCreate, BranchUpdate]):
     def create(
-        self, db: Session, *, obj_in: BranchCreate, company_id: int, 
-        skip: int = 0, limit: int = 100) -> Branch:
+        self, db: Session, *, obj_in: BranchCreate, company_id: int) -> Branch:
         obj_in_data = jsonable_encoder(obj_in)
         db_obj = self.model(**obj_in_data, company_id=company_id)
         db.add(db_obj)
