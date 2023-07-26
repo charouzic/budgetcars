@@ -48,6 +48,7 @@ docker-compose up -d
 ## Backend
 - backend is using fastapi for exposing rest api endpoints
 - full list of endpoints can be seen here http://localhost/docs
+- I used this initial [kaggle data](https://www.kaggle.com/datasets/nehalbirla/vehicle-dataset-from-cardekho)
 - the database for storing all the information is postgres
 - on top of that there are 3 components that are prepared for the future use:
   - celery → prepared for async task processing such as data processing, model training etc.
