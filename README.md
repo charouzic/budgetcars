@@ -1,11 +1,26 @@
 # BudgetCars
 Welcome to the repository for used car recommender engine bootstrapped [cookiecutter fullstack template](https://github.com/tiangolo/full-stack-fastapi-postgresql) using Vue.js on the frontend and python fastapi on backend with postgres as a database.
 ## Startup
+### Requirements
+* [Docker](https://www.docker.com/).
+* [Docker Compose](https://docs.docker.com/compose/install/).
+* [Poetry](https://python-poetry.org/) for Python package and environment management.
+  - poetry can be installed by following commands (more info [here](https://github.com/python-poetry/install.python-poetry.org)):
+    - windows (powershell)
+    ```
+    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+    ```
+    - osx/linux
+    ```
+    curl -sSL https://install.python-poetry.org | python3 -
+    ```
+
+
 The app can be run locally by following these steps:
 - clone the repository to you local machine
 - make sure that you have [Docker](https://www.docker.com/) installed and it's up and running on you machine
 - navigate to the root directory of the repository
-- run the following command
+- run the following command (there's bunch of dependecies to be downloaded so feel free to go for a coffee or any other beverage of you choice, it will take a while)
 ```bash
 docker-compose up -d
 ```

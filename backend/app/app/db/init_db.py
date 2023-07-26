@@ -60,7 +60,7 @@ def get_or_create_company(db: Session) -> int:
     return int(company.id)
 
 def get_or_create_branch(db: Session, company_id: int) -> int:
-    branch = crud.branch.get_by_company(db, company_id=company_id)[0]
+    branch = crud.branch.get_by_company(db, company_id=company_id, limit=1)
     if not branch:
         branch_in = schemas.BranchCreate(
             company_id = company_id,
