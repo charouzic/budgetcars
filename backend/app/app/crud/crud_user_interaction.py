@@ -9,20 +9,7 @@ from app.crud.base import CRUDBase
 from app.models.user_interaction import UserInteraction, InteractionType
 from app.schemas.user_interaction import UserInteractionCreate, UserInteractionUpdate
 
-class CRUDUserInteraction(CRUDBase[UserInteraction, UserInteractionCreate, UserInteractionUpdate]):
-    def update(
-            self, 
-            db: Session, 
-            *, 
-            obj_in: UserInteractionCreate) -> UserInteraction:
-        
-        obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data)
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
-    
+class CRUDUserInteraction(CRUDBase[UserInteraction, UserInteractionCreate, UserInteractionUpdate]):  
     def get_multi_by_company_and_branch(
             self, db: Session, *, company_id: int, branch_id: int, skip: int = 0, limit: int = 100
     ) -> List[UserInteraction]:
