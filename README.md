@@ -1,5 +1,5 @@
 # BudgetCars
-Welcome to the repository for used car recommender engine bootstrapped [cookiecutter fullstack template](https://github.com/tiangolo/full-stack-fastapi-postgresql) using Vue.js on the frontend and python fastapi on backend with postgres as a database.
+Welcome to the repository for used car recommender engine bootstrapped on top of [cookiecutter fullstack template](https://github.com/tiangolo/full-stack-fastapi-postgresql) using Vue.js on the frontend and python fastapi on backend with postgres as a database.
 
 ## Requirements
 * [Docker](https://www.docker.com/).
